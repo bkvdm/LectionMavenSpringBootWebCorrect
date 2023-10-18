@@ -3,6 +3,7 @@ package pro.sky.skyprospringdemo.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pro.sky.skyprospringdemo.domain.Person;
 import pro.sky.skyprospringdemo.exceptions.BadPersonNumberException;
 import pro.sky.skyprospringdemo.service.PersonService;
 
@@ -23,8 +24,15 @@ public class PersonController {
             throw new RuntimeException(e);
         }
         return person;
-        }
     }
+
+    @GetMapping(path = "/param/add")
+    public String addPerson(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("passport") String passport, @RequestParam("profession") Integer profession) {
+        Person person = new Person(name, surname, passport, profession);
+        personService.addPerson(person);
+        return "person added";
+    }
+}
 //    @GetMapping(path = "/person")
 //    public String getPersonInfo(@RequestParam("number") Integer number) {
 //        try {
